@@ -15,15 +15,15 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
 		"sourceSize": {"w":17,"h":12}
 	},
-	"birdText.png": {
-		"frame": {"x":0, "y":202, "w":38, "h":19},
-		"spriteSourceSize": {"x":0,"y":0,"w":38,"h":19},
-		"sourceSize": {"w":38,"h":19}
-	},
 	"birdUp.png": {
 		"frame": {"x":23, "y":268, "w":17, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
 		"sourceSize": {"w":17,"h":12}
+	},
+	"birdText.png": {
+		"frame": {"x":0, "y":202, "w":38, "h":19},
+		"spriteSourceSize": {"x":0,"y":0,"w":38,"h":19},
+		"sourceSize": {"w":38,"h":19}
 	},
 	"bronzeMedal.png": {
 		"frame": {"x":0, "y":265, "w":22, "h":22},

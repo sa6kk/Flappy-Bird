@@ -1,8 +1,8 @@
 (function(){
-    'use strict'
-    
-    var GAME_WIDTH = 144,
-        GAME_HEIGHT = 256;
+    'use strict';
+
+        var gameSettings = GameSettings.getInstance();
+        console.log(gameSettings);
 
         var stage, renderer;
 
@@ -12,7 +12,7 @@
         loader.load();
 
         function onAssetsLoaded(){
-            createrenderer();            
+            createrenderer();       
 
             var container = new PIXI.Container(),
                 backgroundSprite = new PIXI.Sprite(new PIXI.Texture.fromImage("background.png"));
@@ -21,20 +21,23 @@
 
             container.addChild(backgroundSprite);
             stage.addChild(container);
-            animate();    
+            
+            var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 2 );
+            stage.addChild(bird);
+            animate();
         }
 
          function createrenderer() {
             console.log("Create Renderer");
 
             var rendererOptions = {
-            antialiasing: false,
-            transparent: false,
-            // resolution: window.devicePixelRatio,
-            autoResize: true,
+                antialiasing: false,
+                transparent: false,
+                resolution: window.devicePixelRatio,
+                autoResize: true,
             }
 
-            renderer = PIXI.autoDetectRenderer(GAME_WIDTH, GAME_HEIGHT, rendererOptions);
+            renderer = PIXI.autoDetectRenderer(gameSettings.gameWidth, gameSettings.gameHeight, rendererOptions);
 
             // Put the renderer on screen in the corner
             renderer.view.style.position = "absolute";
@@ -53,19 +56,19 @@
 
     function resize() {
         // Determine which screen dimension is most constrained
-        var ratio = Math.min(window.innerWidth/GAME_WIDTH,
-                         window.innerHeight/GAME_HEIGHT);
+        var ratio = Math.min(window.innerWidth/gameSettings.gameWidth,
+                         window.innerHeight/gameSettings.gameHeight);
 
         // Scale the view appropriately to fill that dimension
         stage.scale.x = stage.scale.y = ratio;
 
         // Update the renderer dimensions
-        renderer.resize(Math.ceil(GAME_WIDTH * ratio),
-                        Math.ceil(GAME_HEIGHT * ratio));
+        renderer.resize(Math.ceil(gameSettings.gameWidth * ratio),
+                        Math.ceil(gameSettings.gameHeight * ratio));
       }
 
       function animate() {
           requestAnimationFrame(animate);
           renderer.render(stage);
       }   
-}())
+})()
