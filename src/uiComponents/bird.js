@@ -24,7 +24,7 @@ var Bird = function (x, y) {
             new PIXI.Texture.fromImage("birdUp.png")];
 
     this.texture = birdTextures[0];
-    velocityY = -gameSettings.birdJumpVelocity;
+    velocityY = -gameSettings.birdFlyVelocity;
 
 
     var startBirdFlapping = function () {
@@ -73,6 +73,11 @@ var Bird = function (x, y) {
 
     startBirdFlapping();
     birdGravity();
+
+    this.fly = function() { 
+        velocityY = -gameSettings.birdFlyVelocity; 
+    }
 };
 
 Bird.prototype = Object.create(PIXI.Sprite.prototype);
+

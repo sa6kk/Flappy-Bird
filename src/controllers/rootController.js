@@ -21,8 +21,13 @@
 
             container.addChild(backgroundSprite);
             stage.addChild(container);
-            
+
             var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
+            stage.interactive = true;
+            stage.click = stage.touchstart = function() { 
+                bird.fly();
+                console.log("stage clicked");
+            }            
             stage.addChild(bird);
             animate();
         }
@@ -40,9 +45,11 @@
             renderer = PIXI.autoDetectRenderer(gameSettings.gameWidth, gameSettings.gameHeight, rendererOptions);
 
             // Put the renderer on screen in the corner
-            renderer.view.style.position = "absolute";
-            renderer.view.style.top = "0px";
-            renderer.view.style.left = "0px";
+            // renderer.view.style.position = "absolute";
+            // renderer.view.style.top = "0px";
+            // renderer.view.style.left = "0px";             
+            renderer.view.style.display = "block"
+            renderer.view.style.margin = "auto";
 
             stage = new PIXI.Container();
 
