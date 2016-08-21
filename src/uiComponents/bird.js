@@ -6,12 +6,15 @@ var Bird = function (x, y) {
         now,
         then = Date.now(),
         interval = 3000 / fps,
-        delta;
+        delta,
+        birdRotationY,
+        velocityY;
 
     this.x = x;
     this.y = y;
     this.anchor.x = this.anchor.y = 0.5;
-
+    this.hasFallen = false;
+    this.isStatic = false;
 
     var gameSettings = GameSettings.getInstance(),
         birdPhase = 0,
@@ -20,27 +23,56 @@ var Bird = function (x, y) {
             new PIXI.Texture.fromImage("birdMiddle.png"),
             new PIXI.Texture.fromImage("birdUp.png")];
 
-    this.texture = new PIXI.Texture.fromImage("birdMiddle.png");
+    this.texture = birdTextures[0];
+    velocityY = -gameSettings.birdJumpVelocity;
 
-    var onEnterFrame = function () {
-        requestAnimationFrame(onEnterFrame);
+
+    var startBirdFlapping = function () {
+        requestAnimationFrame(startBirdFlapping);
 
         now = Date.now();
-            delta = now - then;
+        delta = now - then;
 
-            if (delta > interval) {
-                then = now - (delta % interval);
+        if (delta > interval) {
+            then = now - (delta % interval);
 
+            if (!self.hasFallen) {
                 if (birdPhase > 2) {
                     birdPhase = 0;
                 }
 
                 self.texture = birdTextures[birdPhase];
-                birdPhase++;
-            }  
+                birdPhase += 1;
+            }
+        }
     }
 
-    onEnterFrame();
+    var birdGravity = function () {
+        requestAnimationFrame(birdGravity);
+
+        if (!self.hasFallen && !self.isStatic) {
+            if (self.y >= gameSettings.gameHeight - 15) {
+                self.hasFallen = true;
+                console.log(self.rotation);
+                console.log("birdHeight - " + self.height)
+            }
+
+            if (velocityY < 12) {
+                velocityY += gameSettings.gravity;
+            }
+            self.y += velocityY;
+
+            if(velocityY > 0 && self.rotation < 1.5) {
+                self.rotation += 0.035;
+            }
+            else if (velocityY < 0 && self.rotation > -0.5){
+                self.rotation -= 0.05;
+            }
+        }
+    }
+
+    startBirdFlapping();
+    birdGravity();
 };
 
 Bird.prototype = Object.create(PIXI.Sprite.prototype);

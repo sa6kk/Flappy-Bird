@@ -22,7 +22,7 @@
             container.addChild(backgroundSprite);
             stage.addChild(container);
             
-            var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 2 );
+            var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
             stage.addChild(bird);
             animate();
         }
