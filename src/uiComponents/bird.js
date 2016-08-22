@@ -49,24 +49,25 @@ var Bird = function (x, y) {
 
     var birdGravity = function () {
         requestAnimationFrame(birdGravity);
-
-        if (!self.hasFallen && !self.isStatic) {
-            if (self.y >= gameSettings.gameHeight - 15) {
+        
+        if (!self.hasFallen && !self.isStatic ) {
+            //just testing should be removed
+            //replace with hitTestObject checking ground and bird
+            if (self.y >= gameSettings.groundYPos - self.width) {
                 self.hasFallen = true;
-                console.log(self.rotation);
-                console.log("birdHeight - " + self.height)
             }
 
             if (velocityY < 12) {
                 velocityY += gameSettings.gravity;
             }
+
             self.y += velocityY;
 
             if(velocityY > 0 && self.rotation < 1.5) {
-                self.rotation += 0.035;
+                self.rotation += velocityY / 20;
             }
-            else if (velocityY < 0 && self.rotation > -0.5){
-                self.rotation -= 0.05;
+            else if (velocityY < 0 && self.rotation > -0.2){
+                self.rotation -= 0.12;
             }
         }
     }
