@@ -17,23 +17,32 @@
             var container = new PIXI.Container(),
                 backgroundSprite = new PIXI.Sprite(new PIXI.Texture.fromImage("background.png"));
 
-            var ground = new Ground();
-            ground.y = gameSettings.gameHeight - ground.height
-            gameSettings.groundYPos = ground.y;
-
             var birdController = new BirdController();
 
             container.addChild(backgroundSprite);
             stage.addChild(container);
-            stage.addChild(ground);            
+
+            var ground = new Ground();
+            ground.y = gameSettings.gameHeight - ground.height
+            gameSettings.groundYPos = ground.y;
+
+            var pipeUp = new Pipe(true);
+            pipeUp.y -= 20;
+            var pipeDown = new Pipe(false);
+            pipeDown.y += 80;      
+            stage.addChild(pipeUp);
+            stage.addChild(pipeDown);
 
             //testing bird
             var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
             stage.interactive = true;
             stage.click = stage.touchstart = function() { 
                 bird.fly();
-            }            
+            };         
+
+            stage.addChild(ground);            
             stage.addChild(bird);
+
             animate();
         }
 
