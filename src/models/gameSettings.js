@@ -7,6 +7,7 @@ var GameSettings = (function () {
         settings.gameHeight = 256;
         settings.gravity = 0.1;
         settings.birdFlyVelocity = 2.5;
+        settings.groundYPos = null; // will be set when creating the ground
 
         return settings;
     }
