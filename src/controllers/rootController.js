@@ -27,11 +27,11 @@
             stage.addChild(container);
             stage.addChild(ground);            
 
+            //testing bird
             var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
             stage.interactive = true;
             stage.click = stage.touchstart = function() { 
                 bird.fly();
-                console.log("stage clicked");
             }            
             stage.addChild(bird);
             animate();
