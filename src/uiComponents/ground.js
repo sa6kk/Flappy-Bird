@@ -1,35 +1,34 @@
-'use strict';
-var Ground = function () {
-    PIXI.Sprite.call(this);
-    var self = this,
-        fps = 60,
-        now,
-        then = Date.now(),
-        interval = 1000 / fps,
-        delta,
-        gameSettings = GameSettings.getInstance();
+class Ground extends PIXI.Sprite {
+    constructor() {
+        super();
 
-    this.texture = new PIXI.Texture.fromImage("ground.png");;
-    this.isMoving = true;
+        this.texture = new PIXI.Texture.fromImage("ground.png");;
+        let fps = 60;
+        this._then = Date.now(),
+        this._interval = 1000 / fps,
+        this._delta,
+        this._gameSettings = GameSettings.getInstance();
 
-    var move = function () {
-        requestAnimationFrame(move);
+        this._isMoving = true;
+        this.move();
+    }
 
-        now = Date.now();
-        delta = now - then;
+    move() {
+        requestAnimationFrame(() => { this.move() } );
+        // requestAnimationFrame((function() { this.move() }).bind(this))
 
-        if (delta > interval) {
-            if (self.isMoving === true) {
-                self.x -= 2;
+        let now = Date.now();
+        this._delta = now - this._then;
 
-                if (-self.x === self.texture.width - gameSettings.gameWidth) {
-                    self.x = 0;
+        if (this._delta > this._interval){
+            this._then = now - (this._delta % this._interval);
+            if (this._isMoving === true) {
+                this.x -= 2;
+
+                if (-this.x === this.texture.width - this._gameSettings.gameWidth) {
+                    this.x = 0;
                 }
             }
         }
     }
-
-    move();
-}
-
-Ground.prototype = Object.create(PIXI.Sprite.prototype);
+}   

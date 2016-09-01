@@ -1,12 +1,12 @@
 (function(){
     'use strict';
 
-        var gameSettings = GameSettings.getInstance();
+        let gameSettings = GameSettings.getInstance();
         console.log(gameSettings);
 
-        var stage, renderer;
+        let stage, renderer;
 
-        var loader = PIXI.loader;
+        let loader = PIXI.loader;
         loader.add('ace', "assets/spritesData.json");
         loader.on('complete', onAssetsLoaded);
         loader.load();
@@ -14,27 +14,28 @@
         function onAssetsLoaded(){
             createrenderer();       
 
-            var container = new PIXI.Container(),
+            let container = new PIXI.Container(),
                 backgroundSprite = new PIXI.Sprite(new PIXI.Texture.fromImage("background.png"));
 
-            var birdController = new BirdController();
+            let birdController = new BirdController();
 
             container.addChild(backgroundSprite);
             stage.addChild(container);
 
-            var ground = new Ground();
+            let ground = new Ground();
             ground.y = gameSettings.gameHeight - ground.height
             gameSettings.groundYPos = ground.y;
 
-            var pipeUp = new Pipe(true);
+            //pipe test
+            let pipeUp = new Pipe(true);
             pipeUp.y -= 20;
-            var pipeDown = new Pipe(false);
+            let pipeDown = new Pipe(false);
             pipeDown.y += 80;      
             stage.addChild(pipeUp);
             stage.addChild(pipeDown);
 
             //testing bird
-            var bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
+            let bird = new Bird(gameSettings.gameWidth / 3,gameSettings.gameHeight / 5 );
             stage.interactive = true;
             stage.click = stage.touchstart = function() { 
                 bird.fly();
@@ -49,7 +50,7 @@
          function createrenderer() {
             console.log("Create Renderer");
 
-            var rendererOptions = {
+            let rendererOptions = {
                 antialiasing: false,
                 transparent: false,
                 resolution: window.devicePixelRatio,
@@ -77,7 +78,7 @@
 
     function resize() {
         // Determine which screen dimension is most constrained
-        var ratio = Math.min(window.innerWidth/gameSettings.gameWidth,
+        let ratio = Math.min(window.innerWidth/gameSettings.gameWidth,
                          window.innerHeight/gameSettings.gameHeight);
 
         // Scale the view appropriately to fill that dimension

@@ -1,84 +1,80 @@
-'use strict';
-var Bird = function (x, y) {
-    PIXI.Sprite.call(this);
-    var self = this,
-        fps = 60,
-        now,
-        then = Date.now(),
-        interval = 3000 / fps,
-        delta,
-        birdRotationY,
-        velocityY;
+class Bird extends PIXI.Sprite {
+    constructor(x, y) {
+        super()
 
-    this.x = x;
-    this.y = y;
-    this.anchor.x = this.anchor.y = 0.5;
-    this.hasFallen = false;
-    this.isStatic = false;
+        let fps = 60;
+        this._then = Date.now();
+        this._interval = 3000 / fps;
+        this._delta;
+        this._velocityY;
 
-    var gameSettings = GameSettings.getInstance(),
-        birdPhase = 0,
-        birdTextures = [
-            new PIXI.Texture.fromImage("birdDown.png"),
-            new PIXI.Texture.fromImage("birdMiddle.png"),
-            new PIXI.Texture.fromImage("birdUp.png")];
+        this.x = x;
+        this.y = y;
+        this.anchor.x = this.anchor.y = 0.5;
+        this._hasFallen = false;
+        this._isStatic = false;
 
-    this.texture = birdTextures[0];
-    velocityY = -gameSettings.birdFlyVelocity;
+        this._gameSettings = GameSettings.getInstance();
+        this._birdPhase = 0;
+        this._birdTextures = [
+                new PIXI.Texture.fromImage("birdDown.png"),
+                new PIXI.Texture.fromImage("birdMiddle.png"),
+                new PIXI.Texture.fromImage("birdUp.png")];
 
+        this.texture = this._birdTextures[0];
+        this._velocityY = -this._gameSettings.birdFlyVelocity;
 
-    var startBirdFlapping = function () {
-        requestAnimationFrame(startBirdFlapping);
+        this.startBirdFlapping();
+        this.birdGravity();
+    }
 
-        now = Date.now();
-        delta = now - then;
+    startBirdFlapping() {
+        requestAnimationFrame(() => { this.startBirdFlapping() });
 
-        if (delta > interval) {
-            then = now - (delta % interval);
+        let now = Date.now();
+        this._delta = now - this._then;
 
-            if (!self.hasFallen) {
-                if (birdPhase > 2) {
-                    birdPhase = 0;
+        if (this._delta > this._interval) {
+            this._then = now - (this._delta % this._interval);
+
+            if (!this._hasFallen) {
+                if (this._birdPhase > 2) {
+                    this._birdPhase = 0;
                 }
 
-                self.texture = birdTextures[birdPhase];
-                birdPhase += 1;
+                this.texture = this._birdTextures[this._birdPhase];
+                this._birdPhase += 1;
             }
         }
     }
 
-    var birdGravity = function () {
-        requestAnimationFrame(birdGravity);
-        
-        if (!self.hasFallen && !self.isStatic ) {
+    birdGravity() {
+        requestAnimationFrame(() => { this.birdGravity() });
+
+        if (!this._hasFallen && !this._isStatic) {
             //just testing should be removed
             //replace with hitTestObject checking ground and bird
-            if (self.y >= gameSettings.groundYPos - self.width) {
-                self.hasFallen = true;
+            if (this.y >= this._gameSettings.groundYPos - this.width) {
+                this._hasFallen = true;
             }
 
-            if (velocityY < 12) {
-                velocityY += gameSettings.gravity;
+            if (this._velocityY < 12) {
+                this._velocityY += this._gameSettings.gravity;
             }
 
-            self.y += velocityY;
+            this.y += this._velocityY;
 
-            if(velocityY > 0 && self.rotation < 1.5) {
-                self.rotation += velocityY / 20;
+            if (this._velocityY > 0 && this.rotation < 1.5) {
+                this.rotation += this._velocityY / 20;
             }
-            else if (velocityY < 0 && self.rotation > -0.2){
-                self.rotation -= 0.12;
+            else if (this._velocityY < 0 && this.rotation > -0.2) {
+                this.rotation -= 0.12;
             }
         }
     }
 
-    startBirdFlapping();
-    birdGravity();
-
-    this.fly = function() { 
-        velocityY = -gameSettings.birdFlyVelocity; 
+    fly() {
+        this._velocityY = -this._gameSettings.birdFlyVelocity;
     }
 };
-
-Bird.prototype = Object.create(PIXI.Sprite.prototype);
 

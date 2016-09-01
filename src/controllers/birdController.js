@@ -1,7 +1,3 @@
-var BirdController = function() {
-    PIXI.Container.call(this);
+class BirdController extends PIXI.Container {
 
-};
-
-
-BirdController.prototype = Object.create(PIXI.Container.prototype);
+}
