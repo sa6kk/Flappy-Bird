@@ -1,0 +1,26 @@
+{
+  "name": "flappy_bird",
+  "description": "",
+  "main": "index.html",
+  "authors": [
+    "jkanchelov"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "flappy",
+    "bird",
+    "pixi.js"
+  ],
+  "homepage": "https://github.com/jkanchelov/Flappy-Bird",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pixi.js": "^4.0.0",
+    "gsap": "^1.19.0"
+  }
+}
