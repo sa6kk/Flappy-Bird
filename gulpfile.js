@@ -2,14 +2,36 @@ const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
 const del = require('del');
 const zip = require('gulp-zip');
+const ts = require(`gulp-typescript`);
+const sourcemaps = require('gulp-sourcemaps');
+const tsProject = ts.createProject("tsconfig.json");
 
 const nodeModulesForBuild = [
-    './node_modules/babel-polyfill/**/*'
+    // './node_modules/babel-polyfill/**/*'
 ]
 
-gulp.task('default', ['cleanBuild'], function () {
+gulp.task('build', ['cleanBuild','transpile'], function () {
     gulp.start('indexHtml', 'scripts', 'libs', 'bowerComp', 'nodeModules', 'imagemin');
 });
+
+gulp.task('transpile', ['cleanDist'], function() {
+   var tsResult = tsProject
+    .src()
+    .pipe(sourcemaps.init())
+    .pipe(tsProject());
+
+  return tsResult.js
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/.'));
+});
+
+gulp.task('watch', ['transpile'], function() {
+    gulp.watch('src/*.ts', ['transpile']);
+});
+
+gulp.task('cleanDist',function() {
+    return del(['dist']);
+})
 
 gulp.task('cleanBuild',function() {
     return del(['build']);
