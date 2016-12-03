@@ -1,22 +1,33 @@
 module FlappyBird {
     export class GameSettings {
+        //game resolution
         gameWidth: number = 144;
         gameHeight: number = 256;
-        gravity: number = 0.1;
-        birdFlyVelocity: number = 2.4;
-        groundYPos: number = null;
+        
+        //bird settings
+        birdStartingXPossition:number = this.gameWidth / 3;
+        birdStartingYPossition:number = this.gameHeight / 5;
+        birdFlyVelocity: number = 2.5;
+        gravity: number = 0.106;
+        
+        //obsticles settings
+        pipeObsticlesGap:number = 45;
+        obsticlesDistance:number = 80;
+        obsticlesSpeed:number = 1;
 
-        private static _instance: GameSettings = new GameSettings();
+        groundYPos:number = null;
+
+        private static instance: GameSettings = new GameSettings();
 
         constructor() {
-            if (GameSettings._instance) {
-                throw new Error("Error: Instantiation failed: Use SingletonDemo.getInstance() instead of new.");
+            if (GameSettings.instance) {
+                throw new Error("Error: Instantiation failed: Use GameSettings.getInstance() instead of new.");
             }
-            GameSettings._instance = this;
+            GameSettings.instance = this;
         }
 
         public static getInstance(): GameSettings {
-            return GameSettings._instance;
+            return GameSettings.instance;
         }
     }
 }

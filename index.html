@@ -1,14 +1,17 @@
 <html>
-    <head>
-        <script src="../node_modules/babel-polyfill/dist/polyfill.js"></script>        
+    <head> 
         <script src="bower_components/pixi.js/dist/pixi.js"></script>
         <script src="bower_components/gsap/src/uncompressed/TweenMax.js"></script>
-        <script src="dist/models/gameSettings.js"></script>   
+        <script src="dist/models/gameSettings.js"></script>
+        <script src="dist/utils/collisionChecker.js"></script>
         <script src="dist/uiComponents/pipe.js"></script>        
         <script src="dist/uiComponents/bird.js"></script>
-        <script src="dist/uiComponents/ground.js"></script>        
+        <script src="dist/uiComponents/ground.js"></script>       
+        <script src="dist/uiComponents/pipesObsticle.js"></script>                 
         <script src="dist/views/rootView.js"></script>                                       
+        <script src="dist/views/obsticlesView.js"></script>                                       
         <script src="dist/controllers/rootController.js"></script>
+        <script src="dist/controllers/obsticlesController.js"></script>        
         <script src="dist/main.js"></script>                                            
     </head>
     <body> 

@@ -1,3 +1,6 @@
+/// <reference path="../../typings/pixi.js.d.ts" />
+/// <reference path="../models/gameSettings.ts" />
+
 module FlappyBird {
     export class Bird extends PIXI.Sprite {
         private gameSettings: GameSettings;
@@ -11,11 +14,14 @@ module FlappyBird {
         private velocityY: number;
 
         private isStatic: boolean;
-        private hasFallen: boolean
+        private isHitted: boolean;
+        private hasFallen: boolean;
 
         constructor(x: number, y: number) {
             super()
 
+            this.gameSettings = GameSettings.getInstance();
+            
             let fps = 60;
             this.then = Date.now();
             this.interval = 3000 / fps;
@@ -25,15 +31,16 @@ module FlappyBird {
             this.x = x;
             this.y = y;
             this.anchor.x = this.anchor.y = 0.5;
-            this.hasFallen = false;
+            this.isHitted = false;
             this.isStatic = false;
+            this.hasFallen = false;
 
-            this.gameSettings = GameSettings.getInstance();
             this.birdPhase = 0;
             this.birdTextures = [
                 PIXI.Texture.fromImage("birdDown.png"),
                 PIXI.Texture.fromImage("birdMiddle.png"),
-                PIXI.Texture.fromImage("birdUp.png")];
+                PIXI.Texture.fromImage("birdUp.png")
+            ];
 
             this.texture = this.birdTextures[0];
             this.velocityY = -this.gameSettings.birdFlyVelocity;
@@ -42,25 +49,32 @@ module FlappyBird {
             this.birdGravity();
         }
 
+        get IsStatic(): boolean { return this.isStatic; }
         get HasFallen(): boolean { return this.hasFallen; }
-        set HasFallen(value: boolean) {
-            this.hasFallen = value;
+        get IsHitted(): boolean { return this.isHitted; }
 
-            if (!value) {
-                this.velocityY = 12;
-            }
+        set IsStatic(value: boolean) { this.isStatic = value; }
+        set HasFallen(value: boolean) { this.hasFallen = value; }
+        set IsHitted(value: boolean) { 
+            if(value)
+                this.velocityY = 0;
+            this.isHitted = value;
         }
 
-        fly() {
+        fly(): void {
+            if (!this.isHitted)
+                this.velocityY = -this.gameSettings.birdFlyVelocity;
+        }
+
+        resetBird(): void {
+            this.rotation = 0;
             this.velocityY = -this.gameSettings.birdFlyVelocity;
-        }
-
-        resetBird() {
+            this.isHitted = false;
             this.hasFallen = false;
             this.isStatic = false;
         }
 
-        private startBirdFlapping() {
+        private startBirdFlapping(): void {
             requestAnimationFrame(() => { this.startBirdFlapping(); });
 
             let now = Date.now();
@@ -69,7 +83,7 @@ module FlappyBird {
             if (this.delta > this.interval) {
                 this.then = now - (this.delta % this.interval);
 
-                if (!this.hasFallen) {
+                if (!this.isHitted) {
                     if (this.birdPhase > 2) {
                         this.birdPhase = 0;
                     }
@@ -80,7 +94,7 @@ module FlappyBird {
             }
         }
 
-        private birdGravity() {
+        private birdGravity(): void {
             if (!this.hasFallen && !this.isStatic) {
                 if (this.velocityY < 12) {
                     this.velocityY += this.gameSettings.gravity;
@@ -88,15 +102,18 @@ module FlappyBird {
 
                 this.y += this.velocityY;
 
-                if (this.velocityY > 0 && this.rotation < 1.5) {
-                    this.rotation += this.velocityY / 20;
+                if (!this.isHitted) {
+                    if (this.velocityY > 0 && this.rotation < 1.5) {
+                        this.rotation += this.velocityY / 30;
+                    }
+                    else if (this.velocityY < 0 && this.rotation > -0.2) {
+                        this.rotation -= 0.12;
+                    }
+                } else {
+                    this.rotation += 0.1;
                 }
-                else if (this.velocityY < 0 && this.rotation > -0.2) {
-                    this.rotation -= 0.12;
-                }
-
-                requestAnimationFrame(() => { this.birdGravity(); });
             }
+            requestAnimationFrame(() => { this.birdGravity(); });
         }
-    };
+    }
 }

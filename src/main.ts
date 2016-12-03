@@ -1,6 +1,6 @@
 /// <reference path="../typings/pixi.js.d.ts" />
-/// <reference path="./controllers/rootController.ts" />
 /// <reference path="./models/gameSettings.ts" />
+/// <reference path="./controllers/rootController.ts" />
 /// <reference path="./views/rootView.ts" />
 
 module FlappyBird {    
@@ -16,16 +16,16 @@ module FlappyBird {
             loader.load();
         }
         
-        private onAssetsLoaded() {
+        private onAssetsLoaded():void {
             this.createrenderer();
 
             let rootView = new RootView(this.stage),
-                rootController = new RootController(rootView, this.gameSettings);
+                rootController = new RootController(rootView);
 
             this.animate()
         }
 
-        private createrenderer() {
+        private createrenderer():void {
             console.log("Create Renderer");
 
             let rendererOptions = {
@@ -49,10 +49,10 @@ module FlappyBird {
 
             document.body.appendChild(this.renderer.view);
 
-            window.addEventListener("resize", this.resize);
+            window.addEventListener("resize", this.resize.bind(this));
         }
 
-        private resize() {
+        private resize():void {
             let ratio = Math.min(window.innerWidth / this.gameSettings.gameWidth,
                 window.innerHeight / this.gameSettings.gameHeight);
             this.stage.scale.x = this.stage.scale.y = ratio;
@@ -61,7 +61,7 @@ module FlappyBird {
                 Math.ceil(this.gameSettings.gameHeight * ratio));
         }
 
-        private animate() {
+        private animate():void {
             requestAnimationFrame(this.animate.bind(this));
             this.renderer.render(this.stage);
         }

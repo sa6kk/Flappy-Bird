@@ -1,15 +1,18 @@
+/// <reference path="../models/gameSettings.ts" />
+/// <reference path="../../typings/pixi-filters.d.ts" />
+
 module FlappyBird {
     export class Pipe extends PIXI.Sprite {
-        constructor(pipeUp: boolean = true) {
+        constructor(upperPipe: boolean = true) {
             super();
 
             let gameSettings: GameSettings = GameSettings.getInstance();
 
-            this.texture = PIXI.Texture.fromImage(pipeUp ? "pipeUp.png" : "pipeDown.png");
+            this.texture = PIXI.Texture.fromImage(upperPipe ? "pipeUp.png" : "pipeDown.png");
 
-            if (!pipeUp) {
+            if (!upperPipe) {
                 this.y = gameSettings.groundYPos - this.texture.height;
             }
         }
-    };
+    }
 }

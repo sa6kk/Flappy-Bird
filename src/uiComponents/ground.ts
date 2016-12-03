@@ -1,3 +1,6 @@
+/// <reference path="../../typings/pixi.js.d.ts" />
+/// <reference path="../models/gameSettings.ts" />
+
 module FlappyBird {
     export class Ground extends PIXI.Sprite {
         private gameSettings: GameSettings;
@@ -19,13 +22,22 @@ module FlappyBird {
                 this.gameSettings = GameSettings.getInstance();
 
             this.isMoving = true;
-            this.startMoving();
+            this._startMoving();
         }
 
-        private startMoving() {
+        startMoving(){
+            this.isMoving = true;
+            this._startMoving();
+        }
+
+        stopMoving(){
+            this.isMoving = false;
+        }
+
+        private _startMoving() {
             requestAnimationFrame(() => {
                 if (this.isMoving) {
-                    this.startMoving()
+                    this._startMoving()
                 }
             });
 
