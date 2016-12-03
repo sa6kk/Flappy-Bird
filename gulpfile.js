@@ -7,14 +7,15 @@ const sourcemaps = require('gulp-sourcemaps');
 const tsProject = ts.createProject("tsconfig.json");
 
 const nodeModulesForBuild = [
-    // './node_modules/babel-polyfill/**/*'
+    //// EXAMPLE
+    // './node_modules/babel-polyfill/**'
 ]
 
-gulp.task('build', ['cleanBuild','transpile'], function () {
+gulp.task('build', ['cleanBuild','cleanTranspile'], function () {
     gulp.start('indexHtml', 'scripts', 'libs', 'bowerComp', 'nodeModules', 'imagemin');
 });
 
-gulp.task('transpile', ['cleanDist'], function() {
+gulp.task('transpile', function() {
    var tsResult = tsProject
     .src()
     .pipe(sourcemaps.init())
@@ -25,8 +26,20 @@ gulp.task('transpile', ['cleanDist'], function() {
     .pipe(gulp.dest('./dist/.'));
 });
 
-gulp.task('watch', ['transpile'], function() {
-    gulp.watch('src/*.ts', ['transpile']);
+
+gulp.task('cleanTranspile', ['cleanDist'], function() {
+   var tsResult = tsProject
+    .src()
+    .pipe(sourcemaps.init())
+    .pipe(tsProject());
+
+  return tsResult.js
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('./dist/.'));
+});
+
+gulp.task('watch', ['cleanTranspile'], function() {
+    gulp.watch('src/**/*.ts', ['transpile']);
 });
 
 gulp.task('cleanDist',function() {
