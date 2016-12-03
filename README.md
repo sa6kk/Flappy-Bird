@@ -1,1 +1,1 @@
-# Flappy-Bird clone
+# Flappy-Bird PixiJS + Typescript
