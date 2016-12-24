@@ -1,3 +1,5 @@
+/// <reference path="../../typings/pixi.js.d.ts" />
+
 module FlappyBird {
     export class RootView extends PIXI.Container {
         private stage: PIXI.Container;

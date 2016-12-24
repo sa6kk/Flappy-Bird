@@ -1,10 +1,9 @@
-/// <reference path="../uiComponents/bird.ts" />
 /// <reference path="../uiComponents/ground.ts" />
 /// <reference path="../uiComponents/pipesObsticle.ts" />
 
 module FlappyBird {
     export class CollisionChecker {
-        static pipeCollision(bird: Bird, pipeObsticle: PipeObsticle): boolean {
+        static pipeCollision(bird: PIXI.Sprite, pipeObsticle: PipeObsticle): boolean {
             let birdLeftPoint: number = bird.x - bird.texture.width;
             let birdRightPoint: number = bird.x + bird.texture.width;
             let birdTopPoint: number = bird.y - bird.texture.height;
@@ -30,7 +29,7 @@ module FlappyBird {
             return false;
         }
 
-        static groundCollision(bird: Bird, ground: Ground): boolean {
+        static groundCollision(bird: PIXI.Sprite, ground: Ground): boolean {
             if (Math.round(bird.y) >= ground.y) {
                 return true;
             } else {

@@ -1,17 +1,35 @@
+/// <reference path="../typings/cordova/cordova.d.ts" />
+/// <reference path="../typings/cocoon.d.ts" />
 /// <reference path="../typings/pixi.js.d.ts" />
+
 /// <reference path="./models/gameSettings.ts" />
 /// <reference path="./controllers/rootController.ts" />
 /// <reference path="./views/rootView.ts" />
 
 module FlappyBird {    
     export class Main {
+        private isCocoonJs;
         private gameSettings:GameSettings =  GameSettings.getInstance();
         private stage:PIXI.Container;
         private renderer:any;
+        private canvas:any;
 
-        constructor(){            
+        constructor(){
+            this.isCocoonJs = navigator.isCocoonJS;
+
+            if (window.cordova) {
+                document.addEventListener("deviceready", this.startLoadingAssets.bind(this));
+            } else {
+                window.onload = this.startLoadingAssets.bind(this);
+            }
+        }
+        
+        private startLoadingAssets():void {
+            setTimeout(() => { try { navigator.splashscreen.hide(); } catch (e) { console.log(e); } }, 5000, false);
+
             let loader = PIXI.loader;
-            loader.add('ace', "assets/spritesData.json");
+            loader.add('gameSprite', !window.cordova ? "img/spritesData.json" : cordova.platformId.toLowerCase() === "android" ? 
+                                                                                    "file:///img/spritesData.json" : "img/spritesData.json");
             loader.on('complete', this.onAssetsLoaded.bind(this));
             loader.load();
         }
@@ -26,39 +44,37 @@ module FlappyBird {
         }
 
         private createrenderer():void {
-            console.log("Create Renderer");
+            if(this.isCocoonJs){
+                console.log("canvas+")
+                this.canvas = document.createElement('screencanvas');
 
-            let rendererOptions = {
-                antialiasing: false,
-                transparent: false,
-                resolution: window.devicePixelRatio,
-                autoResize: true,
+                this.canvas.style.cssText = "idtkscale:ScaleAspectFill";
+                this.canvas.width = window.innerWidth;
+                this.canvas.height = window.innerHeight;
+                this.canvas.backgroundColor = 0xff0000;
+                
+                this.renderer = new PIXI.CanvasRenderer(window.innerWidth, window.innerHeight, this.canvas);
+
+                this.stage = new PIXI.Container();
+                this.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
+                this.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
+
+
+                document.body.appendChild(this.renderer.view);
+            }
+            else {
+                console.log("normal canvas")
+                this.renderer = PIXI.autoDetectRenderer(window.innerWidth, window.innerHeight, { backgroundColor: 0xffff00 });
+
+                this.stage = new PIXI.Container();
+                this.stage.scale.x = window.innerWidth / this.gameSettings.gameWidth;
+                this.stage.scale.y = window.innerHeight / this.gameSettings.gameHeight;
+
+                document.body.appendChild(this.renderer.view);
             }
 
-            this.renderer = PIXI.autoDetectRenderer(this.gameSettings.gameWidth, this.gameSettings.gameHeight, rendererOptions);
-
-            this.renderer.view.style.position = "absolute";
-            this.renderer.view.style.top = "0px";
-            this.renderer.view.style.left = "0px";
-            this.renderer.view.style.display = "block"
-            this.renderer.view.style.margin = "auto";
-
-            this.stage = new PIXI.Container();
-
-            this.resize()
-
-            document.body.appendChild(this.renderer.view);
-
-            window.addEventListener("resize", this.resize.bind(this));
-        }
-
-        private resize():void {
-            let ratio = Math.min(window.innerWidth / this.gameSettings.gameWidth,
-                window.innerHeight / this.gameSettings.gameHeight);
-            this.stage.scale.x = this.stage.scale.y = ratio;
-
-            this.renderer.resize(Math.ceil(this.gameSettings.gameWidth * ratio),
-                Math.ceil(this.gameSettings.gameHeight * ratio));
+            this.stage.interactive = true;
+            this.animate();
         }
 
         private animate():void {

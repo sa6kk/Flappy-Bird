@@ -12,7 +12,7 @@ module FlappyBird {
         
         //obsticles settings
         pipeObsticlesGap:number = 45;
-        obsticlesDistance:number = 80;
+        obsticlesDistance:number = 45;
         obsticlesSpeed:number = 1;
 
         groundYPos:number = null;

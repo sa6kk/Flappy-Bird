@@ -6,17 +6,12 @@
 		"sourceSize": {"w":144,"h":256}
 	},
 	"birdDown.png": {
-		"frame": {"x":23, "y":255, "w":17, "h":12},
+		"frame": {"x":23, "y":268, "w":17, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
 		"sourceSize": {"w":17,"h":12}
 	},
 	"birdMiddle.png": {
-		"frame": {"x":23, "y":242, "w":17, "h":12},
-		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
-		"sourceSize": {"w":17,"h":12}
-	},
-	"birdUp.png": {
-		"frame": {"x":23, "y":268, "w":17, "h":12},
+		"frame": {"x":23, "y":255, "w":17, "h":12},
 		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
 		"sourceSize": {"w":17,"h":12}
 	},
@@ -25,10 +20,20 @@
 		"spriteSourceSize": {"x":0,"y":0,"w":38,"h":19},
 		"sourceSize": {"w":38,"h":19}
 	},
+	"birdUp.png": {
+		"frame": {"x":23, "y":242, "w":17, "h":12},
+		"spriteSourceSize": {"x":0,"y":0,"w":17,"h":12},
+		"sourceSize": {"w":17,"h":12}
+	},
 	"bronzeMedal.png": {
 		"frame": {"x":0, "y":265, "w":22, "h":22},
 		"spriteSourceSize": {"x":0,"y":0,"w":22,"h":22},
 		"sourceSize": {"w":22,"h":22}
+	},
+	"cigarette.png": {
+		"frame": {"x":0, "y":288, "w":8, "h":5},
+		"spriteSourceSize": {"x":0,"y":0,"w":8,"h":5},
+		"sourceSize": {"w":8,"h":5}
 	},
 	"flappyText.png": {
 		"frame": {"x":0, "y":116, "w":56, "h":22},
@@ -51,7 +56,7 @@
 		"sourceSize": {"w":33,"h":19}
 	},
 	"goldMedal.png": {
-		"frame": {"x":52, "y":139, "w":22, "h":22},
+		"frame": {"x":0, "y":242, "w":22, "h":22},
 		"spriteSourceSize": {"x":0,"y":0,"w":22,"h":22},
 		"sourceSize": {"w":22,"h":22}
 	},
@@ -66,12 +71,12 @@
 		"sourceSize": {"w":43,"h":19}
 	},
 	"pipeDown.png": {
-		"frame": {"x":49, "y":162, "w":26, "h":121},
+		"frame": {"x":76, "y":116, "w":26, "h":121},
 		"spriteSourceSize": {"x":0,"y":0,"w":26,"h":121},
 		"sourceSize": {"w":26,"h":121}
 	},
 	"pipeUp.png": {
-		"frame": {"x":76, "y":116, "w":26, "h":135},
+		"frame": {"x":49, "y":162, "w":26, "h":135},
 		"spriteSourceSize": {"x":0,"y":0,"w":26,"h":135},
 		"sourceSize": {"w":26,"h":135}
 	},
@@ -81,7 +86,7 @@
 		"sourceSize": {"w":51,"h":22}
 	},
 	"silverMedal.png": {
-		"frame": {"x":0, "y":242, "w":22, "h":22},
+		"frame": {"x":52, "y":139, "w":22, "h":22},
 		"spriteSourceSize": {"x":0,"y":0,"w":22,"h":22},
 		"sourceSize": {"w":22,"h":22}
 	}
@@ -89,7 +94,7 @@
 },
 "meta": {
 	"image": "sprites.png",
-	"size": {"w": 300, "h": 288},
+	"size": {"w": 300, "h": 298},
 	"scale": "1"
 }
 }

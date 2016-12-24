@@ -86,8 +86,8 @@ gulp.task('zip', function(){
 })
 
 gulp.task('imagemin', function () {
-    var imgSrc = './assets/**/*',
-        imgDst = './build/assets';
+    var imgSrc = './img/**/*',
+        imgDst = './build/img';
 
     gulp.src(imgSrc)
         .pipe(imagemin())
