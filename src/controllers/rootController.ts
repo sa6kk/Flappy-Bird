@@ -7,13 +7,13 @@
 /// <reference path="../utils/collisionChecker.ts" />
 
 module FlappyBird {
-    export class RootController extends PIXI.Container {
+    export class RootController {
         private view: RootView;
 
         private obsticlesController: ObsticlesController;
         private obsticlesView: ObsticlesView;
         private birdController: BirdController;
-        private birdView:BirdView;
+        private birdView: BirdView;
 
         private ground: Ground;
 
@@ -21,8 +21,6 @@ module FlappyBird {
         private gameOver: boolean = false;          // when set to true checkBirdCollision method will stop;
 
         constructor(view: any) {
-            super();
-
             this.view = view;
             this.gameSettings = GameSettings.getInstance();
 
@@ -37,9 +35,9 @@ module FlappyBird {
             this.birdController = new BirdController(this.birdView);
 
             view.interactive = true;
-            document.addEventListener('keydown', (e:KeyboardEvent) => { this.onKeyDown(e); });
+            document.addEventListener('keydown', (e: KeyboardEvent) => { this.onKeyDown(e); });
             view.click = view.touchstart = () => {
-                this.mainAction()
+                this.mainAction();
             };
 
             this.obsticlesView = new ObsticlesView();
@@ -69,7 +67,7 @@ module FlappyBird {
         private checkBirdCollision(): void {
             requestAnimationFrame(() => {
                 if (!this.gameOver && !this.birdController.HasFallen)
-                    this.checkBirdCollision()
+                    this.checkBirdCollision();
             });
 
             //pipe collision
@@ -83,7 +81,7 @@ module FlappyBird {
             if (CollisionChecker.groundCollision(this.birdController.Bird, this.ground)) {
                 this.gameOver = true;
                 this.birdController.HasFallen = true;
-                this.birdHitted()
+                this.birdHitted();
             }
         }
 

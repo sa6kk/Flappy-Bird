@@ -2,8 +2,8 @@
 
 module FlappyBird {
     export class ObsticlesView extends PIXI.Container {
-        constructor(){
-            super()
+        constructor() {
+            super();
         }
     }
 }

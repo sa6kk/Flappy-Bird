@@ -14,7 +14,7 @@ namespace FlappyBird {
 
         private birdFlappying: boolean;
 
-        constructor(birdX:number, birdY:number) {
+        constructor(birdX: number, birdY: number) {
             super();
 
             let fps = 60;

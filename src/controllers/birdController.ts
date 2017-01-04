@@ -2,7 +2,7 @@
 /// <reference path="../views/birdView.ts" />
 
 namespace FlappyBird {
-    export class BirdController extends PIXI.Container { 
+    export class BirdController { 
         private gameSettings: GameSettings;
 
         private view:BirdView;
@@ -13,7 +13,6 @@ namespace FlappyBird {
         private velocityY: number;
 
         constructor(view:BirdView) {
-            super();
             this.gameSettings = GameSettings.getInstance();
             this.view = view;
 

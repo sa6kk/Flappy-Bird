@@ -3,7 +3,7 @@
 /// <reference path="../uiComponents/pipesObsticle.ts" />
 
 module FlappyBird {
-    export class ObsticlesController extends PIXI.Container {
+    export class ObsticlesController {
         private readonly PIPES_COUNT:number = 3; 
 
         private pipeObsticles: Array<PipeObsticle>
@@ -14,14 +14,12 @@ module FlappyBird {
         private nextPipeObsticleIndex: number;
 
         constructor(view: ObsticlesView) {
-            super()
             this.view = view;
             this.pipeObsticles = new Array<PipeObsticle>();
 
             this.nextPipeObsticleIndex = 0;
             for (let i = 0; i < 3; i++) {
                 let pipeObsticle: PipeObsticle = new PipeObsticle();
-                console.log(pipeObsticle.width)
                 pipeObsticle.x = this.gameSettings.gameWidth + pipeObsticle.width * i +  i * this.gameSettings.obsticlesDistance;
                 
                 if(i == 0)
@@ -46,7 +44,7 @@ module FlappyBird {
             this.isRunning = true;
             requestAnimationFrame(() => {
                 if (this.isRunning)
-                    this.startMoving()
+                    this.startMoving();
             })
 
             this.movePipes()

@@ -6,7 +6,7 @@ module FlappyBird {
     export class PipeObsticle extends PIXI.Container {
         private upperPipe: Pipe;
         private bottomPipe: Pipe;
-        private isNextObsticle: boolean
+        private isNextObsticle: boolean;
 
         constructor(isNextObsticle: boolean = false) {
             super();
